@@ -8,42 +8,36 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-   public function store(Request $request) {
-      $request->validate([
-          'nom' => 'required',
-          'description' => 'required',
-      ]);
-
-      $role = Role::create([
-        'nom' => $request->nom,
-        'description' => $request->description
-       ]);
-
-      if($role) {
-          return response()->json([
-              'message' => 'Role created successfully'
-          ], 202);
-      }else{
-          return response()->json([
-              'message' => 'Role creation failed'
-          ], 500);
-      }
-   }
-
-    public function delete($id)
+    public function store(Request $request)
     {
-        $role = Role::destroy($id);
+        $request->validate([
+            'nom' => 'required',
+            'description' => 'required',
+        ]);
+
+        $role = Role::create([
+            'nom' => $request->nom,
+            'description' => $request->description
+        ]);
 
         if ($role) {
             return response()->json([
-                'message' => 'Role deleted successfully'
-            ], 204);
+                'message' => 'Role created successfully'
+            ], 202);
         } else {
             return response()->json([
-                'message' => 'Role deletion failed'
+                'message' => 'Role creation failed'
             ], 500);
         }
     }
 
+    public function destroy($id)
+    {
+        Role::destroy($id);
 
+        return response()->json([
+            'message' => 'Role deleted successfully'
+        ], 201);
+
+    }
 }
